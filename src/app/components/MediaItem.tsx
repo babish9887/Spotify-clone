@@ -52,7 +52,7 @@ const MediaItem: React.FC<MediaItemProps> = ({
                       .then((res)=>{
                             if(res.data.status){
                                   toast.success('Song Deleted!')
-                              //     router.refresh()
+                                  router.refresh()
                             } else
                                   toast.error('Something went wrong')
                       }).catch((e:any)=>toast.error(e.message))
