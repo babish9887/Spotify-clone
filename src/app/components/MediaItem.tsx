@@ -61,7 +61,7 @@ const MediaItem: React.FC<MediaItemProps> = ({
                       }
       }
 
-      if(deleteModal.delete)
+      if(deleteModal.delete===true)
             deleteSong()
     
     },[deleteModal.delete])
