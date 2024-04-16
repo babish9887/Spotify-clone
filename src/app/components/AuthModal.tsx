@@ -35,8 +35,8 @@ const AuthModal = () => {
 
   return (
     <Modal 
-      title="Welcome back" 
-      description="Login to your account." 
+      title="Welcome to Spotify" 
+      description="Login or Signup to your account." 
       isOpen={isOpen} 
       onChange={onChange} 
     >
