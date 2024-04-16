@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 
-interface SubscribeModalStore {
+interface DeleteModalStore {
   isOpen: boolean;
   onOpen: () => void;
   onClose: () => void;
@@ -8,7 +8,7 @@ interface SubscribeModalStore {
   onDelete:(prop:boolean)=>void;
 }
 
-const useDeleteModal = create<SubscribeModalStore>((set) => ({
+const useDeleteModal = create<DeleteModalStore>((set) => ({
   isOpen: false,
   onOpen: () => set({ isOpen: true }),
   onClose: () => set({ isOpen: false }),

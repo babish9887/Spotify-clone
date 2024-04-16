@@ -55,7 +55,7 @@ const MediaItem: React.FC<MediaItemProps> = ({
                                   router.refresh()
                             } else
                                   toast.error('Something went wrong')
-                      }).catch((e:any)=>toast.error(e.message))
+                      }).catch((e:any)=>{})
                       } catch (e: any) {
                       console.log(e.message);
                       }
