@@ -28,8 +28,6 @@ const Library: React.FC<LibraryProps> = ({
     if (!user) {
       return authModal.onOpen();
     }
-
-
     return uploadModal.onOpen();
   }
 

@@ -21,13 +21,7 @@ const UploadModal = () => {
   const supabaseClient = useSupabaseClient();
   const { user } = useUser();
   const router = useRouter();
-
-  const {
-    register,
-    handleSubmit,
-    reset,
-  } = useForm<FieldValues>({
-    defaultValues: {
+  const {register,handleSubmit,reset,} = useForm<FieldValues>({defaultValues: {
       author: '',
       title: '',
       song: null,
@@ -45,18 +39,13 @@ const UploadModal = () => {
   const onSubmit: SubmitHandler<FieldValues> = async (values) => {
     try {
       setIsLoading(true);
-      
       const imageFile = values.image?.[0];
       const songFile = values.song?.[0];
-
       if (!imageFile || !songFile || !user) {
         toast.error('Missing fields')
         return;
       }
-
       const uniqueID = uniqid();
-
-      // Upload song
       const { 
         data: songData, 
         error: songError 
@@ -72,8 +61,6 @@ const UploadModal = () => {
         setIsLoading(false);
         return toast.error('Failed song upload');
       }
-
-      // Upload image
       const { 
         data: imageData, 
         error: imageError
@@ -89,9 +76,7 @@ const UploadModal = () => {
         setIsLoading(false);
         return toast.error('Failed image upload');
       }
-
       
-      // Create record 
       const { error: supabaseError } = await supabaseClient
         .from('songs')
         .insert({

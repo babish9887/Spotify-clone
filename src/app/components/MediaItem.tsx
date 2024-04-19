@@ -38,34 +38,44 @@ const MediaItem: React.FC<MediaItemProps> = ({
     return player.setId(data.id);
   };
 
-  const handleDeleteSong = async (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-      e.stopPropagation(); 
-      deleteModal.onOpen()
+  const handleDeleteSong = async (
+      e: React.MouseEvent<HTMLDivElement, MouseEvent>,
+      songPath: string,
+      imagePath: string
+    ) => {
+      e.stopPropagation(); // Prevent event propagation
+      deleteModal.setsongId(data.song_path);
+      deleteModal.setImageId(data.image_path)
+      deleteModal.onOpen(); // Open delete modal
+      
+      // // Check if the delete modal is open
+      // // if (deleteModal.isOpen) {
+      //   await deleteSong(songPath, imagePath);
+      // // }
     };
-    useEffect(()=>{
+    
 
-      async function deleteSong(){
+      async function deleteSong(songPath:string, imagePath:string){
                   deleteModal.onDelete(false)
                   deleteModal.onClose()
                   try {
-                      await axios.post('/api/deletesong', { songId: data.song_path, image: data.image_path })
+                      await axios.post('/api/deletesong', { songId:songPath, image: imagePath})
                       .then((res)=>{
                             if(res.data.status){
-                                  toast.success('Song Deleted!')
+                                  toast.success('Song Deleted!');
                                   router.refresh()
+                                  
                             } else
                                   toast.error('Something went wrong')
                       }).catch((e:any)=>{})
                       } catch (e: any) {
+                        toast.error('Something went wrong')
                       console.log(e.message);
+                      } finally{
+                        data.song_path="";
+                        data.image_path="";
                       }
       }
-
-      if(deleteModal.delete===true)
-            deleteSong()
-    
-    },[deleteModal.delete])
-
 
 
   return ( 
@@ -107,7 +117,7 @@ const MediaItem: React.FC<MediaItemProps> = ({
       </div>
       <div className={twMerge("absolute right-4 text-emerald-500",isPlayer && "hidden")}>{player.isPlaying && player.activeId===data.id ? <HiVolumeUp/>:""}</div>
       {/* <div className={twMerge("absolute right-4 opacity-0 hover:opacity-100 transition duration-200")} onClick={handleDeleteSong}><FiDelete/></div> */}
-      <div className={twMerge("absolute sm:bg-transparent lg:bg-stone-900 md:right-4 opacity-0 hover:opacity-100 transition duration-200")} onClick={handleDeleteSong}><FaTrash/></div>
+      <div className={twMerge("absolute sm:bg-transparent lg:bg-stone-900 md:right-4 opacity-0 hover:opacity-100 transition duration-200")} onClick={(e)=>handleDeleteSong(e, data.song_path, data.image_path)}><FaTrash/></div>
 
     </div>
   );

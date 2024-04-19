@@ -26,25 +26,15 @@ const AuthModal = () => {
       onClose();
     }
   }, [session, router, onClose]);
-
   const onChange = (open: boolean) => {
     if (!open) {
       onClose();
     }
   }
-
   return (
-    <Modal 
-      title="Welcome to Spotify" 
-      description="Login or Signup to your account." 
-      isOpen={isOpen} 
-      onChange={onChange} 
-    >
-      <Auth
-        supabaseClient={supabaseClient}
-        providers={['google']}
-        magicLink={true}
-        appearance={{
+    <Modal title="Welcome to spotify" description="Login or Signup to your account." isOpen={isOpen} onChange={onChange}>
+      <Auth supabaseClient={supabaseClient} providers={['google']}
+      magicLink={true} appearance={{
           theme: ThemeSupa,
           variables: {
             default: {
@@ -55,10 +45,8 @@ const AuthModal = () => {
             }
           }
         }}
-        theme="dark"
-      />
+        theme="dark" />
     </Modal>
   );
 }
-
 export default AuthModal;

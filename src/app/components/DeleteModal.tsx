@@ -1,11 +1,11 @@
 "use client";
 
 import React from 'react';
-import { toast } from 'react-hot-toast';
 import Modal from './Modal';
 import useDeleteModal from '@/hooks/useDeleteModal';
-import axios from 'axios';
 import { useRouter } from 'next/navigation';
+import axios from 'axios';
+import toast from 'react-hot-toast';
 
 const DeleteModal = () => {
   const deleteModal = useDeleteModal();
@@ -20,6 +20,24 @@ const DeleteModal = () => {
 
   const handleDelete=async()=>{
      deleteModal.onDelete(true);
+     deleteModal.onDelete(false)
+     deleteModal.onClose()
+     try {
+         await axios.post('/api/deletesong', { songId:deleteModal.songId, image: deleteModal.imageId})
+         .then((res)=>{
+               if(res.data.status){
+                     toast.success('Song Deleted!');
+                     router.refresh()
+                     
+               } else
+                     toast.error('Something went wrong')
+         }).catch((e:any)=>{})
+         } catch (e: any) {
+           toast.error('Something went wrong')
+         console.log(e.message);
+         } finally{
+        
+         }
   }
 
   return (
